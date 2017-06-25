@@ -1,0 +1,57 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - build-essential
+        - git
+        - silversearcher-ag
+        - autojump
+        - exuberant-ctags
+        - zsh
+        - git-flow
+        - nodejs
+        - unzip
+        - ntp
+        - libssl-dev
+        - libreadline-dev
+        - zlib1g-dev
+        - postgresql-client-9.5
+    - user:
+        name: ubuntu
+        append: yes
+        group: docker
+        shell: /usr/bin/zsh
+
+    - name: clone dotfiles
+      become: no
+      git: 
+        repo: https://github.com/jamesbowles/dotfiles.git
+        dest: $HOME/src/dotfiles
+        accept_hostkey: true
+    - name: install dotfiles
+      become: no
+      shell: cd ~/src/dotfiles && ./install
+      always_run: true
+    - name: Ensures .vim/autoload/ dir exists
+      become: no
+      file: path=$HOME/.vim/autoload state=directory
+    - name: install vim plug
+      become: no
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: ~/.vim/autoload/plug.vim 
+    - name: fetch oh my zsh install script
+      become: no
+      get_url:
+        url: https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+        dest: ~/
+    - name: install oh my zsh
+      become: no
+      script: ~/install.sh
+
+  roles:
+    - angstwad.docker_ubuntu
