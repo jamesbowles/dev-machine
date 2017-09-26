@@ -9,3 +9,7 @@ otherwise, clone the one dependency manually:
 1. vagrant up
 1. vagrant ssh
 1. start vim and run :PlugInstall
+
+Optional
+1. increase disk size https://github.com/ozbillwang/vagrant-box-resize
+1. add some swap https://gist.github.com/shovon/9dd8d2d1a556b8bf9c82

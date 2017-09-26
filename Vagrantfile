@@ -42,6 +42,18 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "10.2.2.2"
 
   config.ssh.forward_agent = true
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 5001, host: 5001
+  config.vm.network "forwarded_port", guest: 5002, host: 5002
+  config.vm.network "forwarded_port", guest: 5003, host: 5003
+  config.vm.network "forwarded_port", guest: 5004, host: 5004
+  config.vm.network "forwarded_port", guest: 5005, host: 5005
+  config.vm.network "forwarded_port", guest: 5006, host: 5006
+  config.vm.network "forwarded_port", guest: 5007, host: 5007
+  config.vm.network "forwarded_port", guest: 5008, host: 5008
+  config.vm.network "forwarded_port", guest: 5009, host: 5006
+  config.vm.network "forwarded_port", guest: 9000, host: 9000
+  config.vm.network "forwarded_port", guest: 5556, host: 5556
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -63,7 +75,7 @@ Vagrant.configure("2") do |config|
     vb.gui = false
 
     # Customize the amount of memory on the VM:
-    vb.memory = "4096"
+    vb.memory = "8192"
     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
   end
   #
